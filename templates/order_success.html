@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20 text-center bg-white p-10 rounded shadow">
+    <div class="text-green-500 text-6xl mb-4">✔</div>
+    <h1 class="text-3xl font-bold mb-2">Order Placed!</h1>
+    <p class="text-gray-600 mb-6">Thank you for your purchase. We have received your order.</p>
+    
+    <div class="space-y-3">
+        <a href="/orders/my-orders" class="block w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">View My Orders</a>
+        <a href="/" class="block w-full border border-gray-300 py-2 rounded hover:bg-gray-100">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}
