@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center px-4 relative overflow-hidden">
+    
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-green-500/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 h-64 bg-green-500 rounded-full blur-[120px] opacity-20 animate-pulse pointer-events-none"></div>
+
+    <div class="max-w-md w-full bg-anime-card/80 backdrop-blur-xl border border-white/10 p-10 rounded-3xl text-center shadow-[0_0_60px_rgba(0,255,157,0.15)] relative z-10 transform transition-all hover:scale-[1.01]">
+        
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
+
+        <div class="mb-8 relative inline-flex items-center justify-center group">
+            <div class="absolute inset-0 rounded-full bg-green-400 opacity-20 animate-ping"></div>
+            <div class="absolute inset-0 rounded-full bg-green-400 opacity-10 animate-pulse delay-75"></div>
+            
+            <div class="relative w-24 h-24 rounded-full bg-anime-dark border-2 border-green-500/50 flex items-center justify-center shadow-[0_0_30px_rgba(74,222,128,0.3)]">
+                <i class="fa-solid fa-check text-5xl text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.8)]"></i>
+            </div>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-black font-display text-white mb-3 tracking-wide">
+            ORDER <span class="text-green-400 glitch-text" data-text="CONFIRMED">CONFIRMED</span>
+        </h1>
+        
+        <p class="text-gray-400 mb-8 font-light leading-relaxed">
+            Transmission received successfully. Your artifacts are being prepared for deployment.
+        </p>
+        
+        <div class="space-y-4">
+            <a href="/orders/my-orders" class="block w-full group relative overflow-hidden bg-white text-black font-bold font-display py-3 rounded-lg hover:bg-green-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                <span class="relative z-10 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> VIEW MISSION LOG
+                </span>
+            </a>
+
+            <a href="/" class="block w-full bg-transparent border border-white/20 text-gray-300 font-bold font-display py-3 rounded-lg hover:border-neon-blue hover:text-neon-blue hover:bg-neon-blue/5 transition-all duration-300">
+                CONTINUE BROWSING
+            </a>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-white/5 text-xs font-mono text-gray-500">
+            TRANSACTION ID: <span class="text-green-500/70">{{ range(100000, 999999) | random }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

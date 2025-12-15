@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container mx-auto px-6 py-12">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-black font-display text-white">SELLER <span class="text-neon-blue">DASHBOARD</span></h1>
+            <p class="text-gray-400">Manage your inventory.</p>
+        </div>
+        <a href="/admin/add" class="bg-neon-pink text-black px-6 py-3 font-bold uppercase hover:bg-white transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> Add New Item
+        </a>
+    </div>
+
+    <div class="bg-gray-900 border border-white/10 rounded-lg overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-white/5 text-gray-300 uppercase text-xs font-bold">
+                <tr>
+                    <th class="p-4">Product</th>
+                    <th class="p-4">Price</th>
+                    <th class="p-4">Stock</th>
+                    <th class="p-4">Category</th>
+                    <th class="p-4 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/10">
+                {% for product in products %}
+                <tr class="hover:bg-white/5 transition">
+                    <td class="p-4 flex items-center gap-4">
+                        <img src="{{ product.image_url }}" class="w-12 h-12 object-cover rounded border border-white/10">
+                        <span class="text-white font-bold">{{ product.title }}</span>
+                    </td>
+                    <td class="p-4 text-neon-blue">৳{{ product.price }}</td>
+                    <td class="p-4 text-gray-300">{{ product.stock }} units</td>
+                    <td class="p-4">
+                        <span class="bg-white/10 text-xs px-2 py-1 rounded text-white border border-white/20">
+                            {{ product.category.name }}
+                        </span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <form action="/admin/delete/{{ product.id }}" method="post" onsubmit="return confirm('Delete this item?');">
+                            <button type="submit" class="text-red-500 hover:text-white transition">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="p-8 text-center text-gray-500">
+                        No products listed yet. Click "Add New Item" to start.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

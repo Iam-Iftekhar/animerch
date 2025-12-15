@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto py-12 px-4 relative">
+    
+    <div class="flex items-center gap-3 mb-8">
+        <h1 class="text-3xl md:text-4xl font-black font-display text-white tracking-widest">
+            MY <span class="text-neon-blue glitch-text" data-text="LOOT">LOOT</span>
+        </h1>
+        <div class="h-1 bg-gradient-to-r from-neon-purple to-transparent flex-grow rounded opacity-50"></div>
+    </div>
+
+    {% if cart_items %}
+    <div class="bg-anime-card/60 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] relative">
+        <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-neon-blue via-neon-pink to-neon-purple"></div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-black/40 border-b border-white/10">
+                    <tr>
+                        <th class="p-5 font-bold font-display text-neon-blue text-sm uppercase tracking-wider">Artifact</th>
+                        <th class="p-5 text-center font-bold font-display text-gray-400 text-sm uppercase tracking-wider">Unit Cost</th>
+                        <th class="p-5 text-center font-bold font-display text-gray-400 text-sm uppercase tracking-wider">Qty</th>
+                        <th class="p-5 text-center font-bold font-display text-neon-pink text-sm uppercase tracking-wider">Subtotal</th>
+                        <th class="p-5 text-center font-bold font-display text-gray-400 text-sm uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    {% for item in cart_items %}
+                    <tr class="group hover:bg-white/5 transition duration-300">
+                        <td class="p-5">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative w-16 h-16 rounded overflow-hidden border border-white/20 group-hover:border-neon-blue transition">
+                                    <img src="{{ item.product.image_url }}" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <span class="font-bold text-white block group-hover:text-neon-blue transition">{{ item.product.title }}</span>
+                                    <span class="text-xs text-gray-500 uppercase">{{ item.product.category.name if item.product.category else 'Merch' }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <td class="p-5 text-center text-gray-300">৳ {{ item.product.price }}</td>
+                        
+                        <td class="p-5 text-center">
+                            <span class="inline-block bg-anime-dark border border-white/10 text-white px-4 py-1 rounded font-mono shadow-inner">
+                                {{ item.quantity }}
+                            </span>
+                        </td>
+                        
+                        <td class="p-5 text-center font-bold text-neon-pink font-display text-lg drop-shadow-[0_0_5px_rgba(255,0,255,0.5)]">
+                            ৳ {{ item.product.price * item.quantity }}
+                        </td>
+                        
+                        <td class="p-5 text-center">
+                            <a href="/cart/remove/{{ item.id }}" class="group/btn relative inline-flex items-center justify-center w-8 h-8 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,0,0.6)]">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="p-8 bg-black/20 border-t border-white/10 flex flex-col md:flex-row justify-end items-center space-y-4 md:space-y-0 md:space-x-8">
+            <div class="text-xl md:text-2xl font-display text-gray-300">
+                TOTAL: <span class="font-bold text-neon-blue ml-2">৳ {{ total_price }}</span>
+            </div>
+            
+            <a href="/orders/checkout" class="group relative px-8 py-3 bg-gradient-to-r from-neon-purple to-neon-pink text-white font-bold font-display tracking-wide rounded hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(188,19,254,0.4)]">
+                <span class="relative z-10">INITIATE CHECKOUT <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i></span>
+            </a>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="text-center py-24 bg-anime-card/30 border border-white/5 rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
+        <i class="fa-solid fa-cart-shopping absolute text-[12rem] text-white opacity-[0.02] rotate-12"></i>
+        
+        <div class="relative z-10 mb-6 w-24 h-24 rounded-full bg-anime-dark border border-white/10 flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+            <i class="fa-solid fa-ghost text-4xl text-gray-500"></i>
+        </div>
+        
+        <h2 class="relative z-10 text-3xl font-display font-bold text-white mb-2">INVENTORY EMPTY</h2>
+        <p class="relative z-10 text-gray-400 mb-8 max-w-md mx-auto">It looks like you haven't collected any artifacts yet.</p>
+        
+        <a href="/" class="relative z-10 px-8 py-3 bg-transparent border border-neon-blue text-neon-blue font-bold font-display uppercase tracking-widest hover:bg-neon-blue hover:text-black transition duration-300 shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+            Return to Base
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

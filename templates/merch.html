@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+    @keyframes infinite-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .animate-infinite-scroll { display: flex; width: max-content; animation: infinite-scroll 40s linear infinite; }
+    .animate-infinite-scroll:hover { animation-play-state: paused; }
+</style>
+
+<div class="w-full bg-black/80 border-b border-white/10 py-6 overflow-hidden relative z-20">
+    <div class="container mx-auto px-6 mb-2"><h3 class="text-neon-blue text-xs font-bold uppercase tracking-widest">Just Added</h3></div>
+    <div class="relative w-full overflow-hidden">
+        <div class="animate-infinite-scroll flex gap-4 px-6">
+            {% for i in range(2) %} {% for item in recent_items %}
+                <a href="/products/{{ item.id }}" class="block w-[200px] flex-shrink-0 border border-white/10 hover:border-neon-blue bg-gray-900 transition rounded">
+                    <img src="{{ item.image_url }}" class="w-full h-32 object-cover opacity-80">
+                    <div class="p-2"><h4 class="text-white text-xs truncate">{{ item.title }}</h4><p class="text-neon-blue text-xs">৳{{ item.price }}</p></div>
+                </a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-black font-display text-white mb-8 border-l-4 border-neon-blue pl-4">OFFICIAL <span class="text-neon-blue">MERCH</span></h1>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in products %}
+        <div class="group bg-anime-card rounded-xl overflow-hidden border border-white/5 hover:border-neon-blue transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,243,255,0.15)]">
+            <div class="relative h-72 overflow-hidden">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                    <a href="/products/{{ product.id }}" class="bg-neon-blue text-black px-6 py-2 font-bold uppercase hover:bg-white transition">View</a>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-white font-bold truncate">{{ product.title }}</h3>
+                <p class="text-neon-pink font-bold mt-2">৳{{ product.price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

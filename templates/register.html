@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="min-h-[85vh] flex items-center justify-center px-4 relative overflow-hidden">
+    
+    <div class="absolute top-10 left-10 w-96 h-96 bg-neon-blue rounded-full blur-[128px] opacity-10 pointer-events-none animate-pulse"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-neon-pink rounded-full blur-[128px] opacity-10 pointer-events-none animate-pulse" style="animation-delay: 2s;"></div>
+
+    <div class="w-full max-w-md bg-anime-card/70 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-10 shadow-[0_0_60px_rgba(188,19,254,0.15)] relative z-10">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-black font-display text-white tracking-widest mb-2">
+                CREATE <span class="text-neon-blue glitch-text" data-text="IDENTITY">IDENTITY</span>
+            </h2>
+            <p class="text-gray-400 text-sm">Join the network to collect or distribute artifacts.</p>
+        </div>
+        
+        {% if error %}
+        <div class="mb-6 bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded flex items-center justify-center gap-2 animate-pulse">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span class="text-sm font-bold">{{ error }}</span>
+        </div>
+        {% endif %}
+
+        <form action="/auth/register" method="post" class="space-y-5">
+            
+            <div class="group">
+                <label class="block text-neon-purple text-xs font-bold font-display uppercase tracking-widest mb-2 group-hover:text-white transition-colors">
+                    Username
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-neon-purple transition-colors">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </span>
+                    <input type="text" name="username" required placeholder="e.g. NarutoUzumaki" 
+                        class="w-full bg-anime-dark border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple focus:shadow-[0_0_15px_rgba(188,19,254,0.3)] transition-all duration-300">
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block text-neon-purple text-xs font-bold font-display uppercase tracking-widest mb-2 group-hover:text-white transition-colors">
+                    Email Address
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-neon-purple transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" name="email" required placeholder="user@example.com" 
+                        class="w-full bg-anime-dark border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple focus:shadow-[0_0_15px_rgba(188,19,254,0.3)] transition-all duration-300">
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block text-neon-purple text-xs font-bold font-display uppercase tracking-widest mb-2 group-hover:text-white transition-colors">
+                    Password
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-neon-purple transition-colors">
+                        <i class="fa-solid fa-key"></i>
+                    </span>
+                    <input type="password" name="password" required placeholder="••••••••" 
+                        class="w-full bg-anime-dark border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple focus:shadow-[0_0_15px_rgba(188,19,254,0.3)] transition-all duration-300">
+                </div>
+            </div>
+
+            <div class="group">
+                <label class="block text-neon-blue text-xs font-bold font-display uppercase tracking-widest mb-2 group-hover:text-white transition-colors">
+                    Select Your Path
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-neon-blue transition-colors">
+                        <i class="fa-solid fa-id-card"></i>
+                    </span>
+                    <select name="role" class="w-full bg-anime-dark border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-neon-blue focus:shadow-[0_0_15px_rgba(0,243,255,0.3)] appearance-none transition-all duration-300 cursor-pointer">
+                        <option value="buyer">Buyer (I want to shop)</option>
+                        <option value="seller">Seller (I want to sell merch)</option>
+                    </select>
+                    <div class="absolute right-4 top-4 text-gray-500 pointer-events-none">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full mt-2 group relative overflow-hidden bg-white text-black font-bold font-display py-3 rounded-lg hover:bg-neon-blue hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <span class="relative z-10 flex items-center justify-center gap-2">
+                    REGISTER NOW <i class="fa-solid fa-rocket group-hover:translate-x-1 group-hover:-translate-y-1 transition"></i>
+                </span>
+            </button>
+        </form>
+
+        <div class="mt-8 text-center border-t border-white/10 pt-6">
+            <p class="text-gray-500 text-sm">
+                Already part of the crew? 
+                <a href="/auth/login" class="text-neon-pink font-bold hover:text-white hover:underline transition-colors decoration-neon-blue decoration-2 underline-offset-4">
+                    Login Here
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

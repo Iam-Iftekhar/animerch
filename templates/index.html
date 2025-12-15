@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+    @keyframes infinite-scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+    .animate-infinite-scroll {
+        display: flex;
+        width: max-content; /* Ensures the container is as wide as the content */
+        animation: infinite-scroll 40s linear infinite;
+    }
+    .animate-infinite-scroll:hover {
+        animation-play-state: paused; /* Pauses when user hovers to click */
+    }
+</style>
+
+<div class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80')] bg-cover bg-center opacity-40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-anime-dark via-anime-dark/80 to-transparent"></div>
+    
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,243,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,243,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+
+    <div class="container mx-auto px-6 relative z-10 text-center">
+        <span class="inline-block border border-neon-blue/30 bg-neon-blue/10 text-neon-blue px-4 py-1 rounded text-sm font-display font-bold tracking-widest uppercase mb-6 backdrop-blur-md animate-pulse">
+            New Season Arrival
+        </span>
+        
+        <h1 class="text-5xl md:text-8xl font-black font-display text-white mb-6 leading-tight">
+            CHOOSE YOUR <br/>
+            <span class="glitch-text text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink" data-text="PATHWAY">
+                PATHWAY
+            </span>
+        </h1>
+        
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
+            Dive into the world of exclusive collectibles or immerse yourself in the stories.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-8">
+            <a href="/merch" class="group relative px-8 py-4 bg-transparent border border-neon-blue text-neon-blue font-display font-bold uppercase tracking-wider overflow-hidden hover:bg-neon-blue hover:text-black transition duration-300 shadow-[0_0_20px_rgba(0,243,255,0.2)] hover:shadow-[0_0_40px_rgba(0,243,255,0.6)]">
+                
+                <span class="relative z-10 flex items-center gap-2">
+                    <i class="fa-solid fa-shirt"></i> Get Merch
+                </span>
+            </a>
+
+            <a href="/manga" class="group relative px-8 py-4 bg-transparent border border-neon-pink text-neon-pink font-display font-bold uppercase tracking-wider overflow-hidden hover:bg-neon-pink hover:text-black transition duration-300 shadow-[0_0_20px_rgba(255,0,255,0.2)] hover:shadow-[0_0_40px_rgba(255,0,255,0.6)]">
+                
+                <span class="relative z-10 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Read Manga
+                </span>
+            </a>
+        </div>
+
+        {% if user and user.role == 'seller' %}
+        <div class="mt-8">
+            <a href="/admin/add" class="text-gray-400 hover:text-white text-sm underline decoration-neon-purple underline-offset-4">
+                Seller Dashboard: Add Item
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="w-full bg-black border-y border-white/10 py-12 overflow-hidden relative z-20">
+    <div class="container mx-auto px-6 mb-6">
+        <h3 class="text-neon-blue font-display font-bold uppercase tracking-widest text-sm flex items-center gap-2">
+            <span class="w-2 h-2 bg-neon-blue rounded-full animate-ping"></span>
+            Fresh Drops // Incoming Signal
+        </h3>
+    </div>
+
+    <div class="relative w-full overflow-hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-anime-dark to-transparent"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-anime-dark to-transparent"></div>
+
+        <div class="animate-infinite-scroll flex gap-6 px-6">
+            {% for product in products %}
+            <a href="/products/{{ product.id }}" class="block w-[280px] flex-shrink-0 group">
+                <div class="relative h-[200px] rounded-lg overflow-hidden border border-white/10 group-hover:border-neon-purple transition-colors duration-300">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-500">
+                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-1 border border-white/20 uppercase">
+                        {{ product.category.name }}
+                    </div>
+                </div>
+                <div class="mt-3 px-1">
+                    <h4 class="text-white font-bold font-display truncate group-hover:text-neon-purple transition-colors">{{ product.title }}</h4>
+                    <p class="text-neon-blue text-sm">৳{{ product.price }}</p>
+                </div>
+            </a>
+            {% endfor %}
+
+            {% for product in products %}
+            <a href="/products/{{ product.id }}" class="block w-[280px] flex-shrink-0 group">
+                <div class="relative h-[200px] rounded-lg overflow-hidden border border-white/10 group-hover:border-neon-purple transition-colors duration-300">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-500">
+                     <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-1 border border-white/20 uppercase">
+                        {{ product.category.name }}
+                    </div>
+                </div>
+                <div class="mt-3 px-1">
+                    <h4 class="text-white font-bold font-display truncate group-hover:text-neon-purple transition-colors">{{ product.title }}</h4>
+                    <p class="text-neon-blue text-sm">৳{{ product.price }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div id="shop" class="container mx-auto px-6 py-24 relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-white/10 pb-6">
+        <div>
+            <h2 class="text-4xl font-black font-display text-white mb-2">ALL <span class="text-neon-pink">COLLECTIONS</span></h2>
+            <p class="text-gray-400 font-light">Explore the full catalog.</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in products %}
+        <div class="group relative bg-anime-card rounded-xl overflow-hidden border border-white/5 hover:border-neon-blue/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,243,255,0.15)] hover:-translate-y-2">
+            
+            <div class="relative h-80 overflow-hidden bg-gray-900">
+                <a href="/products/{{ product.id }}">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                </a>
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-anime-card via-transparent to-transparent opacity-80"></div>
+
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                    <a href="/products/{{ product.id }}" class="border border-neon-blue text-neon-blue px-6 py-2 font-display font-bold tracking-wider hover:bg-neon-blue hover:text-black transition duration-300 transform translate-y-4 group-hover:translate-y-0 uppercase text-sm">
+                        View Details
+                    </a>
+                </div>
+                
+                <div class="absolute top-3 left-3">
+                    <span class="bg-black/60 backdrop-blur border border-white/10 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                        {{ product.category.name }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-6 relative">
+                <div class="absolute top-0 left-0 w-0 h-[1px] bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-500 group-hover:w-full"></div>
+
+                <h3 class="font-bold text-lg text-white mb-2 truncate font-display tracking-wide group-hover:text-neon-blue transition-colors">{{ product.title }}</h3>
+                
+                <div class="flex justify-between items-center mt-4 border-t border-white/5 pt-4">
+                    <span class="text-2xl font-bold text-neon-pink drop-shadow-[0_0_5px_rgba(255,0,255,0.5)]">৳{{ product.price }}</span>
+                    
+                    {% if user and user.id != product.seller_id %}
+                    <form action="/cart/add/{{ product.id }}" method="post">
+                        <button class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-neon-purple hover:border-neon-purple hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_#bc13fe]">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

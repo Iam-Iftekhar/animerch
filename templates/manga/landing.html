@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="w-full bg-anime-dark border-b border-neon-pink/20 py-4 overflow-hidden relative">
+    <div class="animate-infinite-scroll flex gap-4 px-6 opacity-60 hover:opacity-100 transition">
+        {% for i in range(2) %}
+            {% for item in recent_items %}
+            <div class="w-32 flex-shrink-0"><img src="{{ item.image_url }}" class="w-full h-40 object-cover rounded border border-white/10"></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="min-h-[80vh] flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1613376023733-0a73315d9b06?q=80')] bg-cover bg-fixed relative">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+    
+    <div class="relative z-10 container mx-auto px-6 grid md:grid-cols-2 gap-12 max-w-4xl">
+        
+        <a href="/manga/ebooks" class="group relative block h-96 border border-white/10 bg-black/50 hover:bg-black/80 overflow-hidden rounded-2xl transition-all duration-500 hover:scale-105 hover:border-neon-blue hover:shadow-[0_0_50px_rgba(0,243,255,0.2)]">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                <div class="w-20 h-20 rounded-full bg-neon-blue/10 flex items-center justify-center mb-6 text-neon-blue group-hover:bg-neon-blue group-hover:text-black transition-colors">
+                    <i class="fa-solid fa-tablet-screen-button text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-black font-display text-white mb-2">DIGITAL / E-BOOKS</h2>
+                <p class="text-gray-400 group-hover:text-gray-200">Explore the massive database. Read synopses, check ratings, and find your next obsession.</p>
+                <span class="mt-8 text-neon-blue text-sm uppercase tracking-widest border-b border-neon-blue pb-1">Enter Library &rarr;</span>
+            </div>
+        </a>
+
+        <a href="/manga/physical" class="group relative block h-96 border border-white/10 bg-black/50 hover:bg-black/80 overflow-hidden rounded-2xl transition-all duration-500 hover:scale-105 hover:border-neon-pink hover:shadow-[0_0_50px_rgba(255,0,255,0.2)]">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                <div class="w-20 h-20 rounded-full bg-neon-pink/10 flex items-center justify-center mb-6 text-neon-pink group-hover:bg-neon-pink group-hover:text-black transition-colors">
+                    <i class="fa-solid fa-book text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-black font-display text-white mb-2">PHYSICAL COPIES</h2>
+                <p class="text-gray-400 group-hover:text-gray-200">Add to your shelf. Buy volumes, box sets, and rare editions directly from sellers.</p>
+                <span class="mt-8 text-neon-pink text-sm uppercase tracking-widest border-b border-neon-pink pb-1">Enter Shop &rarr;</span>
+            </div>
+        </a>
+
+    </div>
+</div>
+{% endblock %}

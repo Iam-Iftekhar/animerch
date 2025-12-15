@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-black font-display text-white mb-8 border-l-4 border-neon-pink pl-4">MANGA <span class="text-neon-pink">SHOP</span></h1>
+    
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {% for product in products %}
+        <div class="group bg-anime-card rounded-lg overflow-hidden border border-white/5 hover:border-neon-pink transition-all duration-300">
+            <div class="relative h-[340px] overflow-hidden"> <img src="{{ product.image_url }}" alt="{{ product.title }}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                
+                <form action="/cart/add/{{ product.id }}" method="post" class="absolute bottom-4 right-4 translate-y-20 group-hover:translate-y-0 transition duration-300">
+                    <button class="bg-neon-pink text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-white"><i class="fa-solid fa-cart-plus"></i></button>
+                </form>
+            </div>
+            <div class="p-4">
+                <h3 class="text-white font-bold text-sm truncate">{{ product.title }}</h3>
+                <p class="text-gray-400 text-xs mb-2">Vol. 1 (Example)</p>
+                <p class="text-neon-pink font-bold">৳{{ product.price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

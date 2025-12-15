@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Animerch ⭐{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anime-dark': '#0f0f1a',
+                        'anime-card': '#1a1a2e',
+                        'neon-pink': '#ff00ff',
+                        'neon-blue': '#00f3ff',
+                        'neon-purple': '#bc13fe',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { 
+            background-color: #0f0f1a; 
+            color: white; 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism for Dark Mode */
+        .glass-dark {
+            background: rgba(15, 15, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f0f1a; }
+        ::-webkit-scrollbar-thumb { background: #bc13fe; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff00ff; }
+        
+        /* Glitch Text Utility */
+        .glitch-text { position: relative; }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f1a;
+        }
+        .glitch-text::before { left: 2px; text-shadow: -1px 0 #ff00ff; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
+        .glitch-text::after { left: -2px; text-shadow: -1px 0 #00f3ff; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 5s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(38px, 9999px, 81px, 0); } 20% { clip: rect(6px, 9999px, 14px, 0); } 100% { clip: rect(83px, 9999px, 4px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(24px, 9999px, 96px, 0); } 20% { clip: rect(88px, 9999px, 6px, 0); } 100% { clip: rect(9px, 9999px, 84px, 0); } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <nav class="fixed top-0 w-full z-50 glass-dark transition-all duration-300 shadow-[0_0_15px_rgba(188,19,254,0.15)]">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <a href="/" class="text-2xl md:text-3xl font-black font-display tracking-wider hover:scale-105 transition flex items-center gap-3 group">
+                <img src="/static/images/logo_new.png" alt="Logo" 
+                        class="h-10 w-auto md:h-12 object-contain scale-[1.8] origin-left drop-shadow-[0_0_10px_rgba(0,243,255,0.6)]">
+                
+                <!-- <div class="flex items-center">
+                    <span class="text-white group-hover:text-neon-pink transition duration-300">ANI</span>
+                    <span class="text-neon-blue">MERCH</span>
+                    <span class="text-neon-purple animate-pulse">.</span>
+                </div> -->
+            </a>
+            
+            <div class="flex items-center space-x-6 font-semibold text-sm md:text-base">
+                <a href="/" class="text-gray-300 hover:text-neon-blue transition hidden md:block uppercase tracking-wide">Home</a>
+                
+                {% if user %}
+                    
+                    {% if user.role == 'seller' or user.role == 'admin' %}
+                    <a href="/admin/add" class="block px-4 py-2 text-sm text-neon-blue hover:bg-gray-700">
+                        <i class="fa-solid fa-gauge-high mr-2"></i> Seller Dashboard
+                    </a>
+                    {% endif %}
+
+                    {% if user.role != 'seller' %}
+                    <a href="/cart" class="hover:text-neon-pink transition relative group">
+                        <svg class="w-6 h-6 group-hover:drop-shadow-[0_0_5px_rgba(255,0,255,0.8)] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </a>
+                    {% endif %}
+
+                    <a href="/profile" class="flex items-center gap-3 pl-2 hover:text-neon-blue transition group">
+                        {% if user.avatar_url %}
+                            <img src="{{ user.avatar_url }}" class="w-9 h-9 rounded-full object-cover border-2 border-neon-purple group-hover:border-neon-blue transition shadow-[0_0_10px_rgba(188,19,254,0.3)]">
+                        {% else %}
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-neon-purple to-indigo-900 flex items-center justify-center text-white font-bold border border-white/20">
+                                {{ user.username[0] | upper }}
+                            </div>
+                        {% endif %}
+                        <span class="hidden md:block font-display tracking-wide group-hover:text-white transition">{{ user.username }}</span>
+                    </a>
+
+                    <a href="/auth/logout" class="text-red-400 hover:text-red-200 text-xs md:text-sm border border-red-500/50 px-3 py-1 rounded hover:bg-red-500/10 hover:shadow-[0_0_10px_rgba(255,0,0,0.3)] transition">
+                        LOGOUT
+                    </a>
+
+                {% else %}
+                    <a href="/auth/login" class="text-gray-300 hover:text-white transition uppercase font-display text-sm tracking-wider">Login</a>
+                    <a href="/auth/register" class="bg-neon-blue text-black font-bold font-display px-6 py-2 rounded-full hover:bg-white hover:scale-105 hover:shadow-[0_0_15px_#00f3ff] transition duration-300">
+                        JOIN NOW
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="h-20"></div>
+
+    <main class="flex-grow container mx-auto px-4 sm:px-6 relative">
+        <div class="fixed top-20 left-0 w-64 h-64 bg-neon-purple rounded-full blur-[120px] opacity-10 -z-10 pointer-events-none"></div>
+        <div class="fixed bottom-0 right-0 w-96 h-96 bg-neon-blue rounded-full blur-[120px] opacity-10 -z-10 pointer-events-none"></div>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8 mt-20 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-neon-purple to-transparent opacity-50"></div>
+        <div class="container mx-auto px-6 text-center z-10 relative">
+            <h2 class="text-3xl font-black font-display mb-4 tracking-widest text-white">ANI<span class="text-neon-pink">MERCH</span>.</h2>
+            <p class="text-gray-500 max-w-lg mx-auto mb-8 font-light">
+                Your daily dose of anime drip. 
+                <span class="block text-xs mt-2 text-neon-blue opacity-80">EST. 2025 // DHAKA, BANG-LADESH.</span>
+            </p>
+            <div class="flex justify-center gap-4 mb-8">
+                <a href="https://www.facebook.com/IATofficialLTD" class="text-gray-400 hover:text-neon-pink transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-neon-purple transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.com/channels/@me" class="text-gray-400 hover:text-neon-blue transition"><i class="fa-brands fa-discord"></i></a>
+            </div>
+            <p class="text-gray-700 text-xs font-display tracking-wider">&copy; 2025 Animerch BD. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
